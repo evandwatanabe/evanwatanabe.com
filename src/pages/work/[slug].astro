@@ -383,9 +383,9 @@ type VideoEntry = {
           entry.target.classList.add('is-visible');
           
           // Lazy load and setup iframe if it's a video card
-          const iframe = entry.target.querySelector('.youtube-iframe');
+          const iframe = entry.target.querySelector('.youtube-iframe') as HTMLIFrameElement;
           if (iframe && !iframe.src) {
-            iframe.src = iframe.getAttribute('data-src');
+            iframe.src = iframe.getAttribute('data-src') || '';
           }
           
           obs.unobserve(entry.target);

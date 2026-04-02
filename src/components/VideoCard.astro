@@ -45,9 +45,8 @@ const Tag = href ? 'a' : 'div';
       <iframe
         src={`https://www.tiktok.com/embed/v2/${tiktokEmbed}`}
         class="absolute top-0 left-0 w-full h-[calc(100%+20px)]"
-        frameBorder="0"
-        allowFullScreen
-        scrolling="no"
+        frameborder="0"
+        allowfullscreen
         allow="encrypted-media;"
       ></iframe>
     </div>
@@ -61,9 +60,8 @@ const Tag = href ? 'a' : 'div';
           <iframe
             src={`https://www.instagram.com/reel/${instagramEmbed}/embed/`}
             class={originalForm ? "w-full h-full" : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[180%] min-h-[800px]"}
-            frameBorder="0"
-            scrolling="no"
-            allowTransparency="true"
+            frameborder="0"
+            allowtransparency="true"
           ></iframe>
         ) : (
           <div class="w-full h-full" set:html={instagramEmbed} />
@@ -200,7 +198,7 @@ const Tag = href ? 'a' : 'div';
           video.play().catch(e => console.log('Playback prevented', e));
         }
         if (iframe) {
-          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"playVideo","args":""}), '*');
+          iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"playVideo","args":""}), '*');
           if (thumbnail) thumbnail.classList.add('opacity-0');
         }
       });
@@ -211,8 +209,8 @@ const Tag = href ? 'a' : 'div';
           video.currentTime = 0;
         }
         if (iframe) {
-          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"pauseVideo","args":""}), '*');
-          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"seekTo","args":[0, true]}), '*');
+          iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"pauseVideo","args":""}), '*');
+          iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"seekTo","args":[0, true]}), '*');
           if (thumbnail) thumbnail.classList.remove('opacity-0');
         }
       });
