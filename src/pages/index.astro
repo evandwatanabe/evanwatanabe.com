@@ -16,14 +16,14 @@ import VideoCard from '../components/VideoCard.astro';
       </div>
       
       <div class="flex flex-wrap items-center gap-4">
-        <a href={import.meta.env.BASE_URL + "contact"} class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-white text-black text-sm font-black tracking-tight hover:bg-white/90 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-all duration-300 ease-out w-max">
+        <a href="/contact" class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-white text-black text-sm font-black tracking-tight hover:bg-white/90 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-all duration-300 ease-out w-max">
           Get in Touch
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </a>
 
-        <a href={import.meta.env.BASE_URL + "resume.pdf"} class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-transparent border-2 border-white/20 text-white text-sm font-black tracking-tight hover:border-white hover:bg-white/5 hover:-translate-y-1 transition-all duration-300 ease-out w-max">
+        <a href="/resume.pdf" class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-transparent border-2 border-white/20 text-white text-sm font-black tracking-tight hover:border-white hover:bg-white/5 hover:-translate-y-1 transition-all duration-300 ease-out w-max">
           Resume
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -37,12 +37,12 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 1 -->
       <div class="scroll-reveal">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/last-crumb"}
+          href="/work/last-crumb"
           title="Last Crumb"
           subtitle="Social Media & Content Manager"
           category="Cookie Company"
-          videoSrc={import.meta.env.BASE_URL + "videos/last-crumb.mp4"}
-          thumbnailSrc={import.meta.env.BASE_URL + "videos/last-crumb-poster.jpg"}
+          videoSrc="/videos/last-crumb.mp4"
+          thumbnailSrc="/videos/last-crumb-poster.jpg"
           year="2026 – Present"
         />
       </div>
@@ -50,7 +50,7 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 2 -->
       <div class="scroll-reveal delay-150">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/smore"}
+          href="/work/smore"
           title="S'more"
           category="Social Media App"
           subtitle="Social Media Specialist"
@@ -63,7 +63,7 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 3 -->
       <div class="scroll-reveal delay-300">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/pixa"}
+          href="/work/pixa"
           title="Pixa"
           category="AI Editing Software"
           subtitle="Paid Ad Content Creator"
@@ -75,7 +75,7 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 4 -->
       <div class="scroll-reveal delay-150">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/nyu"}
+          href="/work/nyu"
           title="NYU"
           category="University Relations and Public Affairs"
           subtitle="Social Media Assistant"
@@ -87,7 +87,7 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 5 -->
       <div class="scroll-reveal delay-300">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/evanisboreddd"}
+          href="/work/evanisboreddd"
           title="evanisbored"
           category="Personal Brand"
           subtitle="Creator"
@@ -100,12 +100,12 @@ import VideoCard from '../components/VideoCard.astro';
       <!-- Card 6 -->
       <div class="scroll-reveal delay-450">
         <VideoCard 
-          href={import.meta.env.BASE_URL + "work/kazuo"}
+          href="/work/kazuo"
           title="kazuo.gif"
           category="Personal Brand"
           subtitle="Creator"
-          videoSrc={import.meta.env.BASE_URL + "videos/kazuo.mp4"}
-          thumbnailSrc={import.meta.env.BASE_URL + "videos/kazuo-poster.jpg"}
+          videoSrc="/videos/kazuo.mp4"
+          thumbnailSrc="/videos/kazuo-poster.jpg"
           year="2026 – Present"
         />
       </div>
