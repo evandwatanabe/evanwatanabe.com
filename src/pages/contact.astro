@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact | Evan Watanabe">
+
+
+  <main class="w-full max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen flex flex-col items-center">
+    <div class="scroll-reveal delay-0 mb-12 flex flex-col items-center text-center">
+      <h1 class="text-white font-sans font-extrabold leading-[0.9] tracking-tight" style="font-size: clamp(2rem, 7.5vw, 6rem);">
+        Let's Connect
+      </h1>
+      <p class="text-white/60 text-lg md:text-xl font-sans mt-4 block">
+        evandwatanabe@gmail.com
+      </p>
+    </div>
+
+    <form action="mailto:evandwatanabe@gmail.com" method="post" enctype="text/plain" class="flex flex-col gap-6 w-full max-w-xl mt-4">
+      
+      <div class="group flex flex-col gap-3 scroll-reveal delay-150 w-full">
+        <label for="name" class="text-zinc-500 text-xs font-semibold tracking-widest uppercase font-sans transition-colors group-focus-within:text-white">Name</label>
+        <input type="text" id="name" name="name" class="w-full bg-transparent border-b border-zinc-800 pb-2 text-white font-sans text-lg outline-none focus:border-white transition-colors placeholder-white/10" placeholder="Jane Doe" required />
+      </div>
+
+      <div class="group flex flex-col gap-3 scroll-reveal delay-300 w-full">
+        <label for="email" class="text-zinc-500 text-xs font-semibold tracking-widest uppercase font-sans transition-colors group-focus-within:text-white">Email</label>
+        <input type="email" id="email" name="email" class="w-full bg-transparent border-b border-zinc-800 pb-2 text-white font-sans text-lg outline-none focus:border-white transition-colors placeholder-white/10" placeholder="hello@example.com" required />
+      </div>
+
+      <div class="group flex flex-col gap-3 scroll-reveal delay-450 w-full">
+        <label for="message" class="text-zinc-500 text-xs font-semibold tracking-widest uppercase font-sans transition-colors group-focus-within:text-white">Message</label>
+        <textarea id="message" name="message" rows="4" class="w-full bg-transparent border-b border-zinc-800 pb-2 text-white font-sans text-lg outline-none focus:border-white transition-colors resize-none placeholder-white/10" placeholder="Tell me about your project..." required></textarea>
+      </div>
+      
+      <div class="flex flex-row items-center gap-4 mt-8 scroll-reveal delay-600">
+        <button type="submit" class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-white text-black text-sm font-black tracking-tight hover:bg-white/90 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-all duration-300 ease-out w-max focus:outline-none">
+          Send Message
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+
+        <a href="https://linkedin.com/in/evan-watanabe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-transparent border-2 border-white/20 text-white text-sm font-black tracking-tight hover:border-white hover:bg-white/5 hover:-translate-y-1 transition-all duration-300 ease-out w-max focus:outline-none">
+          LinkedIn
+          <svg class="w-[14px] h-[14px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </a>
+      </div>
+    </form>
+  </main>
+</Layout>
+

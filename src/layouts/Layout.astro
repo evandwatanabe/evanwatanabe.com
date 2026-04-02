@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+
+const { title, description = 'Cinematic portfolio for a visual artist and content creator.' } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script is:inline async defer src="//www.instagram.com/embed.js"></script>
+  </head>
+  <body class="bg-[#000000] text-white min-h-screen font-sans selection:bg-white selection:text-black">
+    <Navigation />
+    <slot />
+    
+    <footer class="mt-auto py-24 px-12 border-t border-white/5">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 font-serif text-white/40">
+        <p>&copy; 2026 Evan Watanabe</p>
+      </div>
+    </footer>
+
+
+
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '50px' });
+        
+        // Auto-reveal some elements aggressively if needed, otherwise observe
+        setTimeout(() => {
+          document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }, 50);
+      });
+    </script>
+  </body>
+</html>

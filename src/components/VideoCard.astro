@@ -1,0 +1,223 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  category?: string;
+  subtitle?: string;
+  year?: string;
+  videoSrc?: string;
+  embedSrc?: string;
+  thumbnailSrc?: string;
+  class?: string;
+  thumbnailPosition?: string;
+  instagramEmbed?: string;
+  tiktokEmbed?: string;
+  views?: string;
+  hideHeaders?: boolean;
+  originalForm?: boolean;
+}
+
+const {
+  href,
+  title,
+  category,
+  subtitle,
+  year,
+  videoSrc,
+  embedSrc,
+  thumbnailSrc,
+  class: className,
+  thumbnailPosition = 'center',
+  instagramEmbed,
+  tiktokEmbed,
+  views,
+  hideHeaders = false,
+  originalForm = false
+} = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag href={href} class={`group relative block aspect-[4/5] bg-[#1D1D1B] rounded-[2rem] overflow-hidden border border-white/5 hover:-translate-y-1 hover:scale-[1.02] hover:border-white/10 transition-all duration-700 cursor-pointer flex flex-col justify-end ${className}`}>
+  
+  <!-- TikTok Background -->
+  {tiktokEmbed && (
+    <div class="absolute inset-0 bg-zinc-900 group-hover:scale-[1.02] transition-transform duration-700 overflow-hidden z-20 pointer-events-auto rounded-2xl">
+      <iframe
+        src={`https://www.tiktok.com/embed/v2/${tiktokEmbed}`}
+        class="absolute top-0 left-0 w-full h-[calc(100%+20px)]"
+        frameBorder="0"
+        allowFullScreen
+        scrolling="no"
+        allow="encrypted-media;"
+      ></iframe>
+    </div>
+  )}
+
+  <!-- Video / Image Background -->
+  {instagramEmbed && (
+    <div class="aspect-[9/16] overflow-hidden rounded-2xl relative w-full h-full bg-black group-hover:scale-[1.02] transition-transform duration-700">
+      <div class={`absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden ${originalForm ? 'pointer-events-auto bg-white' : 'pointer-events-none'}`}>
+        {instagramEmbed.length < 20 ? (
+          <iframe
+            src={`https://www.instagram.com/reel/${instagramEmbed}/embed/`}
+            class={originalForm ? "w-full h-full" : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160%] h-[180%] min-h-[800px]"}
+            frameBorder="0"
+            scrolling="no"
+            allowTransparency="true"
+          ></iframe>
+        ) : (
+          <div class="w-full h-full" set:html={instagramEmbed} />
+        )}
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+    </div>
+  )}
+
+  {!instagramEmbed && videoSrc && (
+    <div class="absolute inset-0 bg-black group-hover:scale-[1.05] transition-transform duration-700 pointer-events-none overflow-hidden">
+      <!-- Media Aspect Holder (Forces 9:16 inside 4:5) -->
+      <div class="absolute inset-0 w-full h-full flex items-center justify-center">
+        <video
+          src={videoSrc}
+          poster={thumbnailSrc}
+          muted
+          playsinline
+          loop
+          aria-hidden="true"
+          class="w-full h-full object-cover video-element"
+          style={`object-position: ${thumbnailPosition}`}
+        ></video>
+      </div>
+      <!-- Organic Bottom-to-Top Vignette -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </div>
+  )}
+
+  {!instagramEmbed && embedSrc && (
+    <div class="absolute inset-0 bg-black group-hover:scale-[1.05] transition-transform duration-700 overflow-hidden pointer-events-none">
+      <!-- Content Wrapper (Fills 4:5 box entirely) -->
+      <div class="absolute inset-0 w-full h-full flex items-center justify-center">
+        <!-- Thumbnail for static state (Fills 4:5 using object-fit: cover) -->
+        <img 
+          src={thumbnailSrc || `https://img.youtube.com/vi/${embedSrc.split('/').pop()}/maxresdefault.jpg`}
+          alt={title}
+          class="absolute inset-0 h-[177.78%] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 thumbnail-overlay object-cover"
+          style={`object-position: ${thumbnailPosition};`}
+          onerror="this.onerror=null;this.src=this.src.replace('maxresdefault','hqdefault');"
+        />
+        
+        <!-- Center-Locked Iframe (Fills Width, Crops Vertically) -->
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#1D1D1B]">
+          <div class="relative w-full h-full overflow-hidden flex items-center justify-center">
+            <iframe
+              src={`${embedSrc}?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=${embedSrc.split('/').pop()}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1`}
+              title={title}
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[177.78%] pointer-events-none embed-element object-cover"
+              allow="autoplay; encrypted-media"
+              aria-hidden="true"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+      <!-- Organic Bottom-to-Top Vignette -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </div>
+  )}
+
+  <!-- Date Pill (Top Right) -->
+  {year && (
+    <div class="absolute top-8 right-8 z-30 flex items-center w-max gap-2 px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/10 pointer-events-none">
+      <span class="text-white/90 text-[8px] md:text-[9px] tracking-[0.2em] font-serif font-bold italic">
+        {year}
+      </span>
+      {year.toUpperCase().includes('PRESENT') && (
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+        </span>
+      )}
+    </div>
+  )}
+
+  <!-- Views Badge -->
+  {views && (
+    <span class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-[10px] text-white/90 font-bold z-10">
+      {views}
+    </span>
+  )}
+
+  <!-- Text Overlay (At the bottom) -->
+  {!hideHeaders && (
+    <div class="absolute bottom-0 left-0 w-full z-10 flex flex-col p-8 transform translate-y-1 group-hover:translate-y-0 transition-all duration-500 gap-1 text-left">
+    <!-- Title Row -->
+    <div class="flex flex-row justify-between items-center w-full gap-4">
+      <h3 class="text-2xl md:text-3xl text-white font-sans font-black tracking-[-0.06em] leading-none pr-10 whitespace-nowrap">
+        {title}
+      </h3>
+    </div>
+    <div class="flex flex-col gap-0.5"> 
+      {subtitle && (
+        <p class="text-white/60 !font-serif text-sm md:text-base font-semibold opacity-80 leading-tight">
+          {subtitle}
+        </p>
+      )}
+      <div class="flex flex-col">
+        <span class="text-white/40 !font-serif text-xs md:text-sm font-normal italic leading-tight">
+          {category}
+        </span>
+      </div>
+    </div>
+    
+    </div>
+  )}
+</Tag>
+
+<style>
+  @keyframes ping {
+    75%, 100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+  .animate-ping {
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+</style>
+
+<script>
+  const setupVideos = () => {
+    const cards = document.querySelectorAll('.group');
+    
+    cards.forEach(card => {
+      const video = card.querySelector('video.video-element') as HTMLVideoElement;
+      const iframe = card.querySelector('iframe.embed-element') as HTMLIFrameElement;
+      const thumbnail = card.querySelector('.thumbnail-overlay');
+      
+      if (!video && !iframe) return;
+
+      card.addEventListener('mouseenter', () => {
+        if (video) {
+          video.play().catch(e => console.log('Playback prevented', e));
+        }
+        if (iframe) {
+          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"playVideo","args":""}), '*');
+          if (thumbnail) thumbnail.classList.add('opacity-0');
+        }
+      });
+ 
+      card.addEventListener('mouseleave', () => {
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+        if (iframe) {
+          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"pauseVideo","args":""}), '*');
+          iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":"seekTo","args":[0, true]}), '*');
+          if (thumbnail) thumbnail.classList.remove('opacity-0');
+        }
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', setupVideos);
+</script>

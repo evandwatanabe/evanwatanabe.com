@@ -1,0 +1,456 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VideoCard from '../../components/VideoCard.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'last-crumb' }, props: { title: 'Last Crumb', subtitle: 'Cookie Company', jobTitle: 'Social Media & Content Manager', year: '2026 – Present', desc: 'Managing end-to-end organic content production and social strategy for Last Crumb, with a focus on data-driven performance analytics. Leading high-profile collaborations with influencers and global IP partners like Guinness and Warner Bros.' } },
+    { params: { slug: 'smore' }, props: { title: "S'more", subtitle: 'Social Media App', jobTitle: 'Social Media Specialist', year: '2023 – 2025', desc: 'Produced high-performing paid advertisements alongside the full organic content calendar for S\'more. Managed end-to-end creation and on-the-ground NYC shooting to drive measurable growth and platform engagement.' } },
+    { params: { slug: 'nyu' }, props: { title: 'NYU', subtitle: 'University Relations and Public Affairs', jobTitle: 'Social Media Assistant', year: '2022 – 2023', desc: 'Produced end-to-end social content for NYU while serving as a primary on-camera host and brand persona. Executed all videography, photography, and graphic design, including man-on-the-street interviews across campus.' } },
+    { params: { slug: 'pixa' }, props: { title: 'Pixa', subtitle: 'AI Editing Software', jobTitle: 'Paid Ad Content Creator', year: '2025 – 2026', desc: 'Produced end-to-end paid ad campaigns for Pixelcut to drive mobile app downloads and user acquisition. Leveraged AI-driven audio and visual tools to streamline creative production and optimize ad performance.' } },
+    { params: { slug: 'evanisboreddd' }, props: { title: 'evanisbored', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Personal brand, managing all content strategy and end-to-end content creation. Specializing in rapid-turnaround video production for New York City\'s restaurant scene and personal life.', externalLink: 'https://www.instagram.com/evanisboreddd/' } },
+    { params: { slug: 'kazuo' }, props: { title: 'kazuo.gif', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Operating as a personal portfolio for stylized videography and experimental digital art. Showcasing a blend of professional photography video edits.', externalLink: 'https://www.instagram.com/kazuo.gif/' } }
+  ];
+}
+
+const { title, subtitle, jobTitle, year, desc, externalLink } = Astro.props;
+
+// Video type with all possible fields
+type VideoEntry = {
+  id: string;
+  title: string;
+  isInsta?: boolean;
+  isTikTok?: boolean;
+  isHorizontal?: boolean;
+  videoSrc?: string;
+  views?: string;
+};
+
+---
+
+<Layout title={`${title} | Evan Watanabe`}>
+  <main class="w-full max-w-7xl mx-auto px-6 pt-32 pb-20 min-h-screen flex flex-col">
+    
+    <div class="max-w-4xl w-full flex flex-col items-start">
+      <!-- Breadcrumb -->
+      <div class="mb-12 scroll-reveal delay-0">
+        <a href="/" class="group inline-flex items-center gap-2 text-white/40 hover:text-white transition-all duration-300 text-sm font-medium">
+          <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Home
+        </a>
+      </div>
+
+      <!-- Dynamic Header Section -->
+      <div class="scroll-reveal delay-150 flex flex-col items-start w-full mb-12">
+        <h1 class="text-6xl md:text-8xl font-sans font-bold tracking-tight mb-4 text-white leading-[0.9] w-full max-w-none">
+          {title}
+        </h1>
+        
+        <div class="flex items-center gap-2 md:gap-4 text-zinc-500 font-sans text-sm md:text-xl font-medium tracking-tight mb-8 overflow-hidden">
+          <span>{subtitle}</span>
+          <span class="text-zinc-800">•</span>
+          <span>{jobTitle}</span>
+          <span class="text-zinc-800">•</span>
+          <span>{year}</span>
+        </div>
+
+        <p class="text-white/60 font-sans text-lg md:text-xl max-w-2xl leading-relaxed">
+          {desc}
+        </p>
+
+        {Astro.params.slug === 'smore' && (
+          <p class="mt-4 text-white/30 font-sans text-sm max-w-2xl italic">
+            Note: Instagram page was discontinued following app closure.
+          </p>
+        )}
+
+        {(() => {
+          const slug = Astro.params.slug;
+          let socials: {url: string, platform: string}[] = [];
+          
+          if (slug === 'smore') {
+            socials.push({ url: "https://www.tiktok.com/@smore_city", platform: "TikTok" });
+          } else if (slug === 'last-crumb') {
+            socials.push({ url: "https://www.instagram.com/lastcrumb", platform: "Instagram" });
+            socials.push({ url: "https://www.tiktok.com/@lastcrumb", platform: "TikTok" });
+          } else if (slug === 'pixa') {
+            socials.push({ url: "https://www.instagram.com/pixelcut/", platform: "Instagram" });
+          } else if (slug === 'nyu') {
+            socials.push({ url: "https://www.instagram.com/nyuniversity", platform: "Instagram" });
+            socials.push({ url: "https://www.tiktok.com/@nyuniversity", platform: "TikTok" });
+          } else if (slug === 'evanisboreddd') {
+            socials.push({ url: "https://www.instagram.com/evanisboreddd", platform: "Instagram" });
+          } else if (slug === 'kazuo') {
+            socials.push({ url: "https://www.instagram.com/kazuo.gif", platform: "Instagram" });
+          }
+
+          if (socials.length > 0) {
+            return (
+              <div class="flex flex-wrap gap-4 mt-8">
+                {socials.map(({url, platform}) => (
+                  <a href={url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 h-12 px-6 md:h-14 md:px-8 rounded-full bg-transparent border border-white/20 text-white text-sm font-black tracking-tight hover:border-white hover:bg-white/5 hover:-translate-y-1 transition-all duration-300 ease-out group/social w-max">
+                    {platform === "TikTok" ? (
+                      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.28-2.26.74-4.63 2.58-5.95 1.12-.87 2.46-1.33 3.88-1.36.1.01.1.2 0 .21-.49.03-.97.08-1.45.22-1.55.45-2.9 1.54-3.59 2.97-.62 1.22-.85 2.64-.59 3.97.23 1.21.9 2.37 1.91 3.08.76.55 1.67.86 2.61.9 1.12.06 2.22-.24 3.16-.84 1.2-.74 1.94-2.03 2.08-3.41.13-1.1.1-2.2.1-3.3V0z"/>
+                      </svg>
+                    ) : (
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                      </svg>
+                    )}
+                    {platform}
+                  </a>
+                ))}
+              </div>
+            );
+          }
+          return null;
+        })()}
+      </div>
+    </div>
+
+    <!-- Uniform 9:16 Reel Grid -->
+    <div class="max-w-5xl mx-auto w-full mt-12 mb-20">
+
+
+      {Astro.params.slug === 'pixa' && (
+        <div class="mb-16 scroll-reveal delay-300">
+          <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">Paid Ad Creative Gallery</h2>
+          <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
+        </div>
+      )}
+      
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+        {(() => {
+          const slug = Astro.params.slug;
+          let activeVideos: VideoEntry[] = [];
+          
+          if (slug === 'smore') {
+            activeVideos = [
+              { id: 'gnsQ3Yhevv0', title: 'Color Me Mine' },
+              { id: 'dVinb2IVXTg', title: 'Street Interview' },
+              { id: '1wgp3HKYdaE', title: 'Office Trivia' },
+              { id: 'aGIfKyMTpTs', title: 'NYC Supper Club' },
+              { id: 'eR4mVbMmA1k', title: 'Day in the Life' },
+              { id: 'YwXEpGhG5so', title: 'K-Pulse' },
+              { id: 'Z3AbcWn3Bs8', title: 'App Walkthrough' },
+              { id: 'Kv2QYMrQeUQ', title: 'Blind Taste Test' },
+              { id: 'D1X7WRa23i8', title: 'Go Tufting' }
+            ];
+          } else if (slug === 'last-crumb') {
+            activeVideos = [
+              { id: 'POWoTHdY53o', title: 'Cookie Reaction' },
+              { id: 'edQbkuaxrss', title: 'Carrot Cake' },
+              { id: 'cVL_7Wm-JWQ', title: 'Chocolate Chip' },
+              { id: 'FORTq7iBj2M', title: 'Guinness Launch' },
+              { id: 'dHEe7JY61yo', title: 'Christmas Cookie' },
+              { id: 'Nf1vueoFtv8', title: 'The Spring Edit' },
+            ];
+          } else if (slug === 'pixa') {
+            activeVideos = [
+              { id: 'rHPseq-qFuY', title: 'Necklace' },
+              { id: 'c12qpyqLRhY', title: 'Holiday Sweater' },
+              { id: 'fE1qsPmmY0o', title: 'Batch Edit' },
+              { id: 'fkX0j2v-8F0', title: 'Product Showcase' },
+              { id: 'IcuFKvlWATU', title: 'Visual Effects' },
+              { id: '1VOqrBSLY8A', title: 'Behind the Scenes' }
+            ];
+          } else if (slug === 'nyu') {
+            activeVideos = [
+              { id: '7311403089917955374', title: 'NYU TikTok', isTikTok: true },
+              { id: '7315487514171641130', title: 'NYU TikTok', isTikTok: true },
+              { id: '7294695206526487851', title: 'NYU TikTok', isTikTok: true },
+              { id: '7252360707570879790', title: 'NYU TikTok', isTikTok: true },
+              { id: '7228971760073428266', title: 'NYU TikTok', isTikTok: true },
+              { id: '7208596602854919466', title: 'NYU TikTok', isTikTok: true }
+            ];
+          } else if (slug === 'evanisboreddd') {
+            activeVideos = [
+              { id: 'ZLdSlGC8e7s', title: 'Life Lately' },
+              { id: 'O--R9topBEU', title: 'Flushing Vlog' },
+              { id: 'Q9IL8Qw1pSE', title: 'Fluffies Hot Chicken' },
+              { id: 'kID_Qygim2Y', title: 'Namaste' },
+              { id: 'MxN7L_gRJ7k', title: 'Neptune 2' }
+            ];
+          } else if (slug === 'kazuo') {
+            activeVideos = [
+              { id: 'RubfvNcV9aI', title: 'Timeline 1' },
+              { id: 'LAU927LjlqI', title: 'Timeline 1 1' },
+              { id: 'VnKi-Lq7wHs', title: 'Digital Art Showcase', isHorizontal: true }
+            ];
+          }
+
+          if (activeVideos.length > 0) {
+            return activeVideos.map((video, index) => {
+              const stagger = index % 3;
+              const delayClass = `delay-${(stagger + 2) * 150}`;
+              
+              if (video.isInsta) {
+                return (
+                  <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
+                    <VideoCard 
+                      href=""
+                      title={video.title}
+                      instagramEmbed={video.id}
+                      views={video.views}
+                      class="!aspect-[9/16] w-full"
+                      hideHeaders={true}
+                      originalForm={['evanisboreddd', 'last-crumb', 'kazuo'].includes(Astro.params.slug)}
+                    />
+                  </div>
+                );
+              }
+
+              if (video.videoSrc) {
+                return (
+                  <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
+                    <VideoCard 
+                      href=""
+                      title={video.title}
+                      videoSrc={video.videoSrc}
+                      views={video.views}
+                      class="!aspect-[9/16] w-full"
+                      hideHeaders={true}
+                    />
+                  </div>
+                );
+              }
+
+              if (video.isTikTok) {
+                return (
+                  <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
+                    <VideoCard 
+                      href=""
+                      title={video.title}
+                      tiktokEmbed={video.id}
+                      views={video.views}
+                      class="!aspect-[9/16] w-full"
+                      hideHeaders={true}
+                    />
+                  </div>
+                );
+              }
+
+              const isHorizontal = video.isHorizontal;
+              const aspectClass = isHorizontal ? 'aspect-video col-span-full' : 'aspect-[9/16]';
+              
+              return (
+                <div class={`flex flex-col gap-4 ${isHorizontal ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
+                  <div class={`${aspectClass} w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-500 hover:!opacity-100 group-hover/grid:opacity-50 hover:scale-[1.02] cursor-pointer relative video-card`}>
+                    <!-- Skeleton shimmer while image loads -->
+                    <div class="absolute inset-0 bg-zinc-900 animate-pulse thumbnail-skeleton"></div>
+                    <!-- Thumbnail -->
+                    <img 
+                      src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                      alt={video.title}
+                      loading="lazy"
+                      class="absolute inset-0 h-full w-full opacity-100 transition-opacity duration-700 thumbnail-element object-cover object-center"
+                      onload="this.previousElementSibling.style.display='none';"
+                    />
+                    
+                    <iframe
+                      data-src={`https://www.youtube.com/embed/${video.id}?enablejsapi=1&autoplay=0&mute=1&loop=1&playlist=${video.id}&controls=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1`}
+                      class="absolute inset-0 w-full h-full pointer-events-none opacity-0 transition-opacity duration-300 youtube-iframe"
+                      allow="autoplay; encrypted-media"
+                    ></iframe>
+                    <!-- Non-hover overlay -->
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+                  </div>
+                </div>
+              );
+            });
+          } else {
+            return Array(6).fill("").map((_, index) => {
+              const stagger = index % 3;
+              const delayClass = `delay-${(stagger + 2) * 150}`;
+              return (
+                <div class={`aspect-[9/16] w-full bg-[#111] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-500 hover:!opacity-100 group-hover/grid:opacity-50 hover:scale-[1.02] cursor-pointer`}>
+                  <video 
+                    autoplay 
+                    loop 
+                    muted 
+                    playsinline 
+                    class="w-full h-full object-cover opacity-90 video-element"
+                  ></video>
+                </div>
+              );
+            });
+          }
+        })()}
+      </div>
+    </div>
+
+    <!-- Additional Sections per project -->
+    {Astro.params.slug === 'last-crumb' && (
+      <div class="max-w-5xl mx-auto w-full mt-24 mb-12 scroll-reveal delay-300">
+        <div class="mb-10">
+          <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">AI Generated Content</h2>
+          <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+          {[
+            { id: 'gym8uGAq3g0', title: 'AI - Valentines Launch' },
+            { id: 'RoL6XMhUedY', title: 'AI - Floating Box' },
+            { id: '9IlM7qCxCAs', title: 'AI - Valentines Ad' }
+          ].map((video, index) => {
+            const stagger = index % 3;
+            const delayClass = `delay-${(stagger + 2) * 150}`;
+            
+            return (
+              <div class="flex flex-col gap-4">
+                <div class={`aspect-[9/16] w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-500 hover:!opacity-100 group-hover/grid:opacity-50 hover:scale-[1.02] cursor-pointer relative video-card`}>
+                  <div class="absolute inset-0 bg-zinc-900 animate-pulse thumbnail-skeleton"></div>
+                  <img 
+                    src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                    alt={video.title}
+                    loading="lazy"
+                    class="absolute inset-0 h-full w-full opacity-100 transition-opacity duration-700 thumbnail-element object-cover object-center"
+                    onload="this.previousElementSibling.style.display='none';"
+                  />
+                  <iframe
+                    data-src={`https://www.youtube.com/embed/${video.id}?enablejsapi=1&autoplay=0&mute=1&loop=1&playlist=${video.id}&controls=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1`}
+                    class="absolute inset-0 w-full h-full pointer-events-none opacity-0 transition-opacity duration-300 youtube-iframe"
+                    allow="autoplay; encrypted-media"
+                  ></iframe>
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+
+
+
+    {Astro.params.slug === 'nyu' && (
+      <div class="max-w-5xl mx-auto w-full mt-24 mb-12 scroll-reveal delay-300">
+        <div class="mb-10">
+          <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">Photography</h2>
+          <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div class="rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal delay-150">
+            <img src="/images/nyu/1.jpg" alt="NYU Event Photography" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div class="rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal delay-300">
+            <img src="/images/nyu/2.jpg" alt="NYU Event Photography" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div class="rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal delay-450">
+            <img src="/images/nyu/3.jpg" alt="NYU Event Photography" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div class="rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal delay-600">
+            <img src="/images/nyu/4.jpg" alt="NYU Event Photography" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Back to Home -->
+    <div class="max-w-5xl mx-auto w-full mt-16 mb-8 flex justify-center scroll-reveal delay-450">
+      <a href="/" class="inline-flex items-center gap-3 text-white/40 hover:text-white transition-all duration-300 font-sans text-sm font-medium group">
+        <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Home
+      </a>
+    </div>
+
+  </main>
+</Layout>
+
+
+
+<script>
+  // Re-initialize intersection observer for dynamic routes
+  document.addEventListener('DOMContentLoaded', () => {
+    let userInteracted = false;
+    const enableAudio = () => {
+        userInteracted = true;
+        document.removeEventListener('click', enableAudio);
+        document.removeEventListener('touchstart', enableAudio);
+    };
+    document.addEventListener('click', enableAudio);
+    document.addEventListener('touchstart', enableAudio);
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          
+          // Lazy load and setup iframe if it's a video card
+          const iframe = entry.target.querySelector('.youtube-iframe');
+          if (iframe && !iframe.src) {
+            iframe.src = iframe.getAttribute('data-src');
+          }
+          
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Hover-to-Play logic for YouTube IFrames
+    const setupIframeHover = () => {
+      const videoCards = document.querySelectorAll('.video-card');
+      
+      videoCards.forEach(card => {
+        const iframe = card.querySelector('.youtube-iframe') as HTMLIFrameElement;
+        
+        card.addEventListener('mouseenter', () => {
+          if (iframe && iframe.contentWindow) {
+            iframe.style.opacity = '1';
+            const thumbnail = card.querySelector('.thumbnail-element') as HTMLElement;
+            if (thumbnail) thumbnail.style.opacity = '0';
+
+            // Unmute and Play only on hover
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'unMute'
+            }), '*');
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'setVolume',
+              args: [50]
+            }), '*');
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'playVideo'
+            }), '*');
+          }
+        });
+
+        card.addEventListener('mouseleave', () => {
+          if (iframe && iframe.contentWindow) {
+            iframe.style.opacity = '0';
+            const thumbnail = card.querySelector('.thumbnail-element') as HTMLElement;
+            if (thumbnail) thumbnail.style.opacity = '1';
+
+            // Mute and Pause immediately on leave
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'mute'
+            }), '*');
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'pauseVideo'
+            }), '*');
+            iframe.contentWindow.postMessage(JSON.stringify({
+              event: 'command',
+              func: 'seekTo',
+              args: [0, true]
+            }), '*');
+          }
+        });
+      });
+    };
+
+    // Delay setup slightly to ensure iframes are ready
+    setTimeout(setupIframeHover, 1000);
+  });
+</script>

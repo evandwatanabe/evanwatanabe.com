@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased bg-[#000] text-white selection:bg-[#F9E79F] selection:text-black;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    filter: brightness(100%) contrast(100%);
+  }
+}
+@layer components {
+  .hero-spacing {
+    @apply pt-40 pb-20;
+  }
+  
+  .pop-accent-bg {
+    background-color: #F9E79F;
+  }
+  
+  .pop-accent-text {
+    color: #F9E79F;
+  }
+  
+  @media (max-width: 768px) {
+    .hero-spacing {
+      padding-top: 2.5rem !important; /* 2.5rem is between 2rem and 3rem */
+    }
+  }
+}
+
+@layer utilities {
+  .serif-accent {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 0.9em;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0.1em;
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .delay-0 { transition-delay: 0ms; }
+  .delay-150 { transition-delay: 150ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-450 { transition-delay: 450ms; }
+  .delay-600 { transition-delay: 600ms; }
+  .delay-750 { transition-delay: 750ms; }
+}
