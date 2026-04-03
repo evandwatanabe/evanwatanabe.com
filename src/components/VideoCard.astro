@@ -99,7 +99,7 @@ const Tag = href ? 'a' : 'div';
         <img 
           src={thumbnailSrc || `https://img.youtube.com/vi/${embedSrc.split('/').pop()}/maxresdefault.jpg`}
           alt={title}
-          class="absolute inset-0 h-[177.78%] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 thumbnail-overlay object-cover pointer-events-none"
+          class="absolute inset-0 h-[177.78%] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 group-hover:opacity-0 thumbnail-overlay object-cover pointer-events-none"
           style={`object-position: ${thumbnailPosition};`}
           onerror="this.onerror=null;this.src=this.src.replace('maxresdefault','hqdefault');"
         />
@@ -199,7 +199,6 @@ const Tag = href ? 'a' : 'div';
         }
         if (iframe) {
           iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"playVideo","args":""}), '*');
-          if (thumbnail) thumbnail.classList.add('opacity-0');
         }
       };
 
@@ -214,9 +213,26 @@ const Tag = href ? 'a' : 'div';
         if (iframe) {
           iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"pauseVideo","args":""}), '*');
           iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"seekTo","args":[0, true]}), '*');
-          if (thumbnail) thumbnail.classList.remove('opacity-0');
         }
       });
+
+      // Reset when scrolled out of view (crucial for mobile)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            if (video) {
+              video.pause();
+              video.currentTime = 0;
+            }
+            if (iframe) {
+              iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"pauseVideo","args":""}), '*');
+              iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"seekTo","args":[0, true]}), '*');
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(card);
     });
   };
 
