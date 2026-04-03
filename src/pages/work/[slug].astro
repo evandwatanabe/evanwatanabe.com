@@ -241,9 +241,13 @@ type VideoEntry = {
                 <div class={`flex flex-col gap-4 ${isHorizontal ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
                   <div class={`aspect-video w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
                     <iframe
-                      src={`https://www.youtube.com/embed/${video.id}?enablejsapi=1&autoplay=0&mute=0&controls=1&rel=0&showinfo=0&modestbranding=1&playsinline=1`}
+                      src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1`}
+                      title={video.title}
+                      width="100%"
+                      height="100%"
                       class="absolute inset-0 w-full h-full"
-                      allow="autoplay; encrypted-media"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                       allowfullscreen
                     ></iframe>
                   </div>
@@ -291,9 +295,13 @@ type VideoEntry = {
               <div class="flex flex-col gap-4">
                 <div class={`aspect-video w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
                   <iframe
-                    src={`https://www.youtube.com/embed/${video.id}?enablejsapi=1&autoplay=0&mute=0&controls=1&rel=0&showinfo=0&modestbranding=1&playsinline=1`}
+                    src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1`}
+                    title={video.title}
+                    width="100%"
+                    height="100%"
                     class="absolute inset-0 w-full h-full"
-                    allow="autoplay; encrypted-media"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                     allowfullscreen
                   ></iframe>
                 </div>
