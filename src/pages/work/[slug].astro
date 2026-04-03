@@ -124,7 +124,7 @@ type VideoEntry = {
         </div>
       )}
       
-      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
         {(() => {
           const slug = Astro.params.slug;
           let activeVideos: VideoEntry[] = [];
@@ -236,29 +236,21 @@ type VideoEntry = {
               }
 
               const isHorizontal = video.isHorizontal;
-              const aspectClass = isHorizontal ? 'aspect-video col-span-full' : 'aspect-[9/16]';
+              const aspectClass = isHorizontal ? 'aspect-video' : 'aspect-[9/16]';
               
               return (
                 <div class={`flex flex-col gap-4 ${isHorizontal ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
-                  <div data-video-id={video.id} class={`${aspectClass} w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative block group cursor-pointer video-thumbnail`}>
-                    <img 
-                      src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                      alt={video.title}
-                      loading="lazy"
-                      class="absolute inset-0 h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <!-- Play button overlay -->
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div class="w-14 h-14 md:w-16 md:h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6 md:w-7 md:h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <!-- Bottom gradient with title -->
-                    <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                      <p class="text-white text-xs md:text-sm font-medium">{video.title}</p>
-                    </div>
+                  <div class={`${aspectClass} w-full bg-black rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1&modestbranding=1&controls=1&showinfo=0`}
+                      title={video.title}
+                      width="100%"
+                      height="100%"
+                      class="absolute inset-0 w-full h-full"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                      allowfullscreen
+                    ></iframe>
                   </div>
                 </div>
               );
@@ -291,7 +283,7 @@ type VideoEntry = {
           <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">AI Generated Content</h2>
           <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
           {[
             { id: 'gym8uGAq3g0', title: 'AI - Valentines Launch' },
             { id: 'RoL6XMhUedY', title: 'AI - Floating Box' },
@@ -302,23 +294,17 @@ type VideoEntry = {
             
             return (
               <div class="flex flex-col gap-4">
-                <div data-video-id={video.id} class={`aspect-[9/16] w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative block group cursor-pointer video-thumbnail`}>
-                  <img 
-                    src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                    alt={video.title}
-                    loading="lazy"
-                    class="absolute inset-0 h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                      <svg class="w-6 h-6 md:w-7 md:h-7 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                    </div>
-                  </div>
-                  <div class="absolute bottom-0 left-0 right-0 p-3 md:p-4 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                    <p class="text-white text-xs md:text-sm font-medium">{video.title}</p>
-                  </div>
+                <div class={`aspect-[9/16] w-full bg-black rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1&modestbranding=1&controls=1&showinfo=0`}
+                    title={video.title}
+                    width="100%"
+                    height="100%"
+                    class="absolute inset-0 w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    allowfullscreen
+                  ></iframe>
                 </div>
               </div>
             );
@@ -364,26 +350,7 @@ type VideoEntry = {
 
   </main>
 
-  <!-- Video Modal -->
-  <div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 backdrop-blur-sm">
-    <button id="modal-close" class="absolute top-4 right-4 md:top-6 md:right-6 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
-      <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-    <div class="w-full h-full flex items-center justify-center p-4 md:p-12">
-      <div id="modal-player" class="w-full max-w-md aspect-[9/16] rounded-2xl overflow-hidden bg-black">
-        <iframe
-          id="modal-iframe"
-          src=""
-          class="w-full h-full"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-          allowfullscreen
-        ></iframe>
-      </div>
-    </div>
-  </div>
+  <!-- Video Modal removed as we now use direct embeds for Shorts feel -->
 </Layout>
 
 
@@ -400,41 +367,5 @@ type VideoEntry = {
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-
-    // Video modal logic
-    const modal = document.getElementById('video-modal') as HTMLElement;
-    const modalIframe = document.getElementById('modal-iframe') as HTMLIFrameElement;
-    const modalClose = document.getElementById('modal-close') as HTMLElement;
-
-    // Open modal when thumbnail is clicked
-    document.querySelectorAll('.video-thumbnail').forEach(thumb => {
-      thumb.addEventListener('click', (e) => {
-        e.preventDefault();
-        const videoId = (thumb as HTMLElement).getAttribute('data-video-id');
-        if (videoId && modal && modalIframe) {
-          modalIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0`;
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-    });
-
-    // Close modal
-    const closeModal = () => {
-      if (modal && modalIframe) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        modalIframe.src = '';
-        document.body.style.overflow = '';
-      }
-    };
-
-    modalClose?.addEventListener('click', closeModal);
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal || (e.target as HTMLElement).closest('#modal-player') === null) {
-        closeModal();
-      }
-    });
   });
 </script>
