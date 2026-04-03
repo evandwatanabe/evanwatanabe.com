@@ -78,6 +78,7 @@ const Tag = href ? 'a' : 'div';
         <video
           src={videoSrc}
           poster={thumbnailSrc}
+          autoplay
           muted
           playsinline
           loop
@@ -99,7 +100,7 @@ const Tag = href ? 'a' : 'div';
         <img 
           src={thumbnailSrc || `https://img.youtube.com/vi/${embedSrc.split('/').pop()}/maxresdefault.jpg`}
           alt={title}
-          class="absolute inset-0 h-[177.78%] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 thumbnail-overlay object-cover"
+          class="absolute inset-0 h-[177.78%] w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 thumbnail-overlay object-cover pointer-events-none"
           style={`object-position: ${thumbnailPosition};`}
           onerror="this.onerror=null;this.src=this.src.replace('maxresdefault','hqdefault');"
         />
@@ -108,9 +109,9 @@ const Tag = href ? 'a' : 'div';
         <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[#1D1D1B]">
           <div class="relative w-full h-full overflow-hidden flex items-center justify-center">
             <iframe
-              src={`${embedSrc}?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=${embedSrc.split('/').pop()}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1`}
+              src={`${embedSrc}?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=${embedSrc.split('/').pop()}&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1`}
               title={title}
-              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[177.78%] pointer-events-none embed-element object-cover"
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[177.78%] embed-element object-cover"
               allow="autoplay; encrypted-media"
               aria-hidden="true"
             ></iframe>
@@ -193,7 +194,7 @@ const Tag = href ? 'a' : 'div';
       
       if (!video && !iframe) return;
 
-      card.addEventListener('mouseenter', () => {
+      const handleEnter = () => {
         if (video) {
           video.play().catch(e => console.log('Playback prevented', e));
         }
@@ -201,7 +202,10 @@ const Tag = href ? 'a' : 'div';
           iframe.contentWindow?.postMessage(JSON.stringify({"event":"command","func":"playVideo","args":""}), '*');
           if (thumbnail) thumbnail.classList.add('opacity-0');
         }
-      });
+      };
+
+      card.addEventListener('mouseenter', handleEnter);
+      card.addEventListener('touchstart', handleEnter, { passive: true });
  
       card.addEventListener('mouseleave', () => {
         if (video) {
