@@ -124,7 +124,7 @@ type VideoEntry = {
         </div>
       )}
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
         {(() => {
           const slug = Astro.params.slug;
           let activeVideos: VideoEntry[] = [];
@@ -235,11 +235,11 @@ type VideoEntry = {
                 );
               }
 
-              const isHorizontal = video.isHorizontal;
+              const aspectClass = isHorizontal ? 'aspect-video' : 'aspect-[9/16]';
               
               return (
                 <div class={`flex flex-col gap-4 ${isHorizontal ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
-                  <div class={`aspect-video w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
+                  <div class={`${aspectClass} w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
                     <iframe
                       src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1`}
                       title={video.title}
@@ -282,7 +282,7 @@ type VideoEntry = {
           <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">AI Generated Content</h2>
           <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
           {[
             { id: 'gym8uGAq3g0', title: 'AI - Valentines Launch' },
             { id: 'RoL6XMhUedY', title: 'AI - Floating Box' },
@@ -293,7 +293,7 @@ type VideoEntry = {
             
             return (
               <div class="flex flex-col gap-4">
-                <div class={`aspect-video w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
+                <div class={`aspect-[9/16] w-full bg-[#000000] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
                   <iframe
                     src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1`}
                     title={video.title}
