@@ -41,11 +41,10 @@ const Tag = href ? 'a' : 'div';
   
   <!-- TikTok Background -->
   {tiktokEmbed && (
-    <div class="absolute inset-0 bg-zinc-900 transition-transform duration-700 overflow-hidden z-20 pointer-events-auto rounded-2xl">
+    <div class="relative bg-zinc-900 overflow-hidden z-20 pointer-events-auto rounded-2xl w-full" style="min-height: 700px;">
       <iframe
         src={`https://www.tiktok.com/embed/v2/${tiktokEmbed}`}
-        class="absolute inset-0 w-full h-full"
-        frameborder="0"
+        class="absolute inset-0 w-full h-full border-0"
         allowfullscreen
         allow="encrypted-media;"
       ></iframe>
