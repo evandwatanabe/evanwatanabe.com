@@ -40,6 +40,19 @@
       padding-top: 2.5rem !important; /* 2.5rem is between 2rem and 3rem */
     }
   }
+
+  /* Windows Font Rendering Adjustments */
+  html.is-windows h1.font-extrabold,
+  html.is-windows h2.font-extrabold {
+    font-weight: 700 !important;
+    letter-spacing: 0.01em !important;
+  }
+  
+  html.is-windows h1.font-bold,
+  html.is-windows h2.font-bold {
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+  }
 }
 
 @layer utilities {

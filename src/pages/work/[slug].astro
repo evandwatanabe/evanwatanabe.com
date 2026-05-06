@@ -9,7 +9,8 @@ export function getStaticPaths() {
     { params: { slug: 'nyu' }, props: { title: 'NYU', subtitle: 'University Relations and Public Affairs', jobTitle: 'Social Media Assistant', year: '2022 – 2023', desc: 'Produced end-to-end social content for NYU while serving as a primary on-camera host and brand persona. Executed all videography, photography, and graphic design, including man-on-the-street interviews across campus.' } },
     { params: { slug: 'pixa' }, props: { title: 'Pixa', subtitle: 'AI Editing Software', jobTitle: 'Paid Ad Content Creator', year: '2025 – 2026', desc: 'Produced end-to-end paid ad campaigns for Pixelcut to drive mobile app downloads and user acquisition. Leveraged AI-driven audio and visual tools to streamline creative production and optimize ad performance.' } },
     { params: { slug: 'evanisboreddd' }, props: { title: 'evanisbored', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Personal brand, managing all content strategy and end-to-end content creation. Specializing in rapid-turnaround video production for New York City\'s restaurant scene and personal life.', externalLink: 'https://www.instagram.com/evanisboreddd/' } },
-    { params: { slug: 'kazuo' }, props: { title: 'kazuo.gif', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Operating as a personal portfolio for stylized videography and experimental digital art. Showcasing a blend of professional photography video edits.', externalLink: 'https://www.instagram.com/kazuo.gif/' } }
+    { params: { slug: 'kazuo' }, props: { title: 'kazuo.gif', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Operating as a personal portfolio for stylized videography and experimental digital art. Showcasing a blend of professional photography video edits.', externalLink: 'https://www.instagram.com/kazuo.gif/' } },
+    { params: { slug: 'nyu-journalism' }, props: { title: 'NYU Journalism', subtitle: 'Student', jobTitle: 'The Beat', year: '2023', desc: 'Covering various news stories and campus life for "The Beat" during my time as a journalism student at NYU.' } }
   ];
 }
 
@@ -117,9 +118,7 @@ type VideoEntry = {
     <div class="max-w-5xl mx-auto w-full mt-12 mb-20">
 
 
-      {/* Title removed for pixa content */}
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+      <div class={`grid gap-6 md:gap-8 group/grid ${Astro.params.slug === 'nyu-journalism' ? 'grid-cols-1 md:grid-cols-2 max-w-6xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
         {(() => {
           const slug = Astro.params.slug;
           let activeVideos: VideoEntry[] = [];
@@ -138,9 +137,10 @@ type VideoEntry = {
             ];
           } else if (slug === 'last-crumb') {
             activeVideos = [
+              { id: 'bWtsPcvyLcE', title: 'Last Crumb Short' },
+              { id: 'cVL_7Wm-JWQ', title: 'Chocolate Chip' },
               { id: 'POWoTHdY53o', title: 'Cookie Reaction' },
               { id: 'edQbkuaxrss', title: 'Carrot Cake' },
-              { id: 'cVL_7Wm-JWQ', title: 'Chocolate Chip' },
               { id: 'FORTq7iBj2M', title: 'Guinness Launch' },
               { id: 'dHEe7JY61yo', title: 'Christmas Cookie' },
               { id: 'Nf1vueoFtv8', title: 'The Spring Edit' },
@@ -177,6 +177,13 @@ type VideoEntry = {
               { id: 'RubfvNcV9aI', title: 'Timeline 1' },
               { id: 'LAU927LjlqI', title: 'Timeline 1 1' },
               { id: 'VnKi-Lq7wHs', title: 'Digital Art Showcase', isHorizontal: true }
+            ];
+          } else if (slug === 'nyu-journalism') {
+            activeVideos = [
+              { id: '9-6EpXe11Gc', title: 'The Beat - NYU Journalism', isHorizontal: true },
+              { id: 'CpFMOR4_YKQ', title: 'The Beat - Street Interview', isHorizontal: true },
+              { id: 'ickxs1AA56A', title: 'The Beat - Campus Life', isHorizontal: true },
+              { id: 'V5TFlg8017w', title: 'The Beat - Feature Story', isHorizontal: true }
             ];
           }
 
@@ -235,7 +242,7 @@ type VideoEntry = {
               const aspectClass = isHorizontal ? 'aspect-video' : 'aspect-[9/16]';
               
               return (
-                <div class={`flex flex-col gap-4 ${isHorizontal ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
+                <div class={`flex flex-col gap-4 ${isHorizontal && Astro.params.slug !== 'nyu-journalism' ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
                   <div class={`${aspectClass} w-full bg-black rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
                     <iframe
                       src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1&modestbranding=1&controls=1&showinfo=0`}
