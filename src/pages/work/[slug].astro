@@ -9,7 +9,7 @@ export function getStaticPaths() {
     { params: { slug: 'nyu' }, props: { title: 'NYU', subtitle: 'University Relations and Public Affairs', jobTitle: 'Social Media Assistant', year: '2022 – 2023', desc: 'Produced end-to-end social content for NYU while serving as a primary on-camera host and brand persona. Executed all videography, photography, and graphic design, including man-on-the-street interviews across campus.' } },
     { params: { slug: 'pixa' }, props: { title: 'Pixa', subtitle: 'AI Editing Software', jobTitle: 'Paid Ad Content Creator', year: '2025 – 2026', desc: 'Produced end-to-end paid ad campaigns for Pixelcut to drive mobile app downloads and user acquisition. Leveraged AI-driven audio and visual tools to streamline creative production and optimize ad performance.' } },
     { params: { slug: 'evanisboreddd' }, props: { title: 'evanisbored', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Personal brand, managing all content strategy and end-to-end content creation. Specializing in rapid-turnaround video production for New York City\'s restaurant scene and personal life.', externalLink: 'https://www.instagram.com/evanisboreddd/' } },
-    { params: { slug: 'kazuo' }, props: { title: 'kazuo.gif', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Operating as a personal portfolio for stylized videography and experimental digital art. Showcasing a blend of professional photography video edits.', externalLink: 'https://www.instagram.com/kazuo.gif/' } },
+    { params: { slug: 'kazuo' }, props: { title: 'kazuo.mov', subtitle: 'Personal Brand', jobTitle: 'Creator', year: '2026 – Present', desc: 'Operating as a personal portfolio for stylized videography and experimental digital art. Showcasing a blend of professional photography video edits.', externalLink: 'https://www.instagram.com/kazuo.mov/' } },
     { params: { slug: 'nyu-journalism' }, props: { title: 'NYU Journalism', subtitle: 'Student', jobTitle: 'The Beat', year: '2023', desc: 'Covering various news stories and campus life for "The Beat" during my time as a journalism student at NYU.' } }
   ];
 }
@@ -84,7 +84,7 @@ type VideoEntry = {
           } else if (slug === 'evanisboreddd') {
             socials.push({ url: "https://www.instagram.com/evanisboreddd", platform: "Instagram" });
           } else if (slug === 'kazuo') {
-            socials.push({ url: "https://www.instagram.com/kazuo.gif", platform: "Instagram" });
+            socials.push({ url: "https://www.instagram.com/kazuo.mov", platform: "Instagram" });
           }
 
           if (socials.length > 0) {
