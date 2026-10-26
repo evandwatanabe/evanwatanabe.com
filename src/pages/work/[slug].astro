@@ -114,169 +114,201 @@ type VideoEntry = {
       </div>
     </div>
 
-    <!-- Uniform 9:16 Reel Grid -->
-    <div class="max-w-5xl mx-auto w-full mt-12 mb-20">
+    <!-- Video Grid Section -->
+    <div class="max-w-6xl mx-auto w-full mt-12 mb-20">
+      {(() => {
+        const slug = Astro.params.slug;
+        let activeVideos: VideoEntry[] = [];
+        
+        if (slug === 'smore') {
+          activeVideos = [
+            { id: 'gnsQ3Yhevv0', title: 'Color Me Mine' },
+            { id: 'dVinb2IVXTg', title: 'Street Interview' },
+            { id: '1wgp3HKYdaE', title: 'Office Trivia' },
+            { id: 'aGIfKyMTpTs', title: 'NYC Supper Club' },
+            { id: 'eR4mVbMmA1k', title: 'Day in the Life' },
+            { id: 'YwXEpGhG5so', title: 'K-Pulse' },
+            { id: 'Z3AbcWn3Bs8', title: 'App Walkthrough' },
+            { id: 'Kv2QYMrQeUQ', title: 'Blind Taste Test' },
+            { id: 'D1X7WRa23i8', title: 'Go Tufting' }
+          ];
+        } else if (slug === 'last-crumb') {
+          activeVideos = [
+            { id: 'bWtsPcvyLcE', title: 'Last Crumb Short' },
+            { id: 'cVL_7Wm-JWQ', title: 'Chocolate Chip' },
+            { id: 'POWoTHdY53o', title: 'Cookie Reaction' },
+            { id: 'edQbkuaxrss', title: 'Carrot Cake' },
+            { id: 'FORTq7iBj2M', title: 'Guinness Launch' },
+            { id: 'dHEe7JY61yo', title: 'Christmas Cookie' },
+            { id: 'Nf1vueoFtv8', title: 'The Spring Edit' },
+          ];
+        } else if (slug === 'pixa') {
+          activeVideos = [
+            { id: 'rHPseq-qFuY', title: 'Necklace' },
+            { id: 'c12qpyqLRhY', title: 'Holiday Sweater' },
+            { id: 'fE1qsPmmY0o', title: 'Batch Edit' },
+            { id: 'fkX0j2v-8F0', title: 'Product Showcase' },
+            { id: 'IcuFKvlWATU', title: 'Visual Effects' },
+            { id: '1VOqrBSLY8A', title: 'Behind the Scenes' }
+          ];
+        } else if (slug === 'nyu') {
+          activeVideos = [
+            { id: '7311403089917955374', title: 'NYU TikTok', isTikTok: true },
+            { id: '7315487514171641130', title: 'NYU TikTok', isTikTok: true },
+            { id: '7294695206526487851', title: 'NYU TikTok', isTikTok: true },
+            { id: '7252360707570879790', title: 'NYU TikTok', isTikTok: true },
+            { id: '7228971760073428266', title: 'NYU TikTok', isTikTok: true },
+            { id: '7208596602854919466', title: 'NYU TikTok', isTikTok: true }
+          ];
+        } else if (slug === 'evanisboreddd') {
+          activeVideos = [
+            { id: 'YDkXTPIKp7o', title: 'Hong Kong' },
+            { id: 'ZLdSlGC8e7s', title: 'Life Lately' },
+            { id: 'O--R9topBEU', title: 'Flushing Vlog' },
+            { id: 'Q9IL8Qw1pSE', title: 'Fluffies Hot Chicken' },
+            { id: 'kID_Qygim2Y', title: 'Namaste' },
+            { id: 'MxN7L_gRJ7k', title: 'Neptune 2' }
+          ];
+        } else if (slug === 'kazuo') {
+          activeVideos = [
+            { id: 'Hx_99ddy1DA', title: 'Hello Ink - October 1', isHorizontal: true },
+            { id: '-uQ4Damy7RU', title: 'Hello Ink - October 8', isHorizontal: true },
+            { id: 'DCxMWI4O3qM', title: 'Hello Ink - October 17', isHorizontal: true },
+            { id: 'VnKi-Lq7wHs', title: 'Digital Art Showcase', isHorizontal: true },
+            { id: 'RubfvNcV9aI', title: 'Timeline 1' },
+            { id: 'LAU927LjlqI', title: 'Timeline 1 1' }
+          ];
+        } else if (slug === 'nyu-journalism') {
+          activeVideos = [
+            { id: '9-6EpXe11Gc', title: 'The Beat - NYU Journalism', isHorizontal: true },
+            { id: 'CpFMOR4_YKQ', title: 'The Beat - Street Interview', isHorizontal: true },
+            { id: 'ickxs1AA56A', title: 'The Beat - Campus Life', isHorizontal: true },
+            { id: 'V5TFlg8017w', title: 'The Beat - Feature Story', isHorizontal: true }
+          ];
+        }
 
-
-      <div class={`grid gap-6 md:gap-8 group/grid ${Astro.params.slug === 'nyu-journalism' ? 'grid-cols-1 md:grid-cols-2 max-w-6xl mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-        {(() => {
-          const slug = Astro.params.slug;
-          let activeVideos: VideoEntry[] = [];
+        const renderVideo = (video: VideoEntry, index: number) => {
+          const stagger = index % 3;
+          const delayClass = `delay-${(stagger + 2) * 150}`;
           
-          if (slug === 'smore') {
-            activeVideos = [
-              { id: 'gnsQ3Yhevv0', title: 'Color Me Mine' },
-              { id: 'dVinb2IVXTg', title: 'Street Interview' },
-              { id: '1wgp3HKYdaE', title: 'Office Trivia' },
-              { id: 'aGIfKyMTpTs', title: 'NYC Supper Club' },
-              { id: 'eR4mVbMmA1k', title: 'Day in the Life' },
-              { id: 'YwXEpGhG5so', title: 'K-Pulse' },
-              { id: 'Z3AbcWn3Bs8', title: 'App Walkthrough' },
-              { id: 'Kv2QYMrQeUQ', title: 'Blind Taste Test' },
-              { id: 'D1X7WRa23i8', title: 'Go Tufting' }
-            ];
-          } else if (slug === 'last-crumb') {
-            activeVideos = [
-              { id: 'bWtsPcvyLcE', title: 'Last Crumb Short' },
-              { id: 'cVL_7Wm-JWQ', title: 'Chocolate Chip' },
-              { id: 'POWoTHdY53o', title: 'Cookie Reaction' },
-              { id: 'edQbkuaxrss', title: 'Carrot Cake' },
-              { id: 'FORTq7iBj2M', title: 'Guinness Launch' },
-              { id: 'dHEe7JY61yo', title: 'Christmas Cookie' },
-              { id: 'Nf1vueoFtv8', title: 'The Spring Edit' },
-            ];
-          } else if (slug === 'pixa') {
-            activeVideos = [
-              { id: 'rHPseq-qFuY', title: 'Necklace' },
-              { id: 'c12qpyqLRhY', title: 'Holiday Sweater' },
-              { id: 'fE1qsPmmY0o', title: 'Batch Edit' },
-              { id: 'fkX0j2v-8F0', title: 'Product Showcase' },
-              { id: 'IcuFKvlWATU', title: 'Visual Effects' },
-              { id: '1VOqrBSLY8A', title: 'Behind the Scenes' }
-            ];
-          } else if (slug === 'nyu') {
-            activeVideos = [
-              { id: '7311403089917955374', title: 'NYU TikTok', isTikTok: true },
-              { id: '7315487514171641130', title: 'NYU TikTok', isTikTok: true },
-              { id: '7294695206526487851', title: 'NYU TikTok', isTikTok: true },
-              { id: '7252360707570879790', title: 'NYU TikTok', isTikTok: true },
-              { id: '7228971760073428266', title: 'NYU TikTok', isTikTok: true },
-              { id: '7208596602854919466', title: 'NYU TikTok', isTikTok: true }
-            ];
-          } else if (slug === 'evanisboreddd') {
-            activeVideos = [
-              { id: 'YDkXTPIKp7o', title: 'Hong Kong' },
-              { id: 'ZLdSlGC8e7s', title: 'Life Lately' },
-              { id: 'O--R9topBEU', title: 'Flushing Vlog' },
-              { id: 'Q9IL8Qw1pSE', title: 'Fluffies Hot Chicken' },
-              { id: 'kID_Qygim2Y', title: 'Namaste' },
-              { id: 'MxN7L_gRJ7k', title: 'Neptune 2' }
-            ];
-          } else if (slug === 'kazuo') {
-            activeVideos = [
-              { id: 'RubfvNcV9aI', title: 'Timeline 1' },
-              { id: 'LAU927LjlqI', title: 'Timeline 1 1' },
-              { id: 'VnKi-Lq7wHs', title: 'Digital Art Showcase', isHorizontal: true }
-            ];
-          } else if (slug === 'nyu-journalism') {
-            activeVideos = [
-              { id: '9-6EpXe11Gc', title: 'The Beat - NYU Journalism', isHorizontal: true },
-              { id: 'CpFMOR4_YKQ', title: 'The Beat - Street Interview', isHorizontal: true },
-              { id: 'ickxs1AA56A', title: 'The Beat - Campus Life', isHorizontal: true },
-              { id: 'V5TFlg8017w', title: 'The Beat - Feature Story', isHorizontal: true }
-            ];
+          if (video.isInsta) {
+            return (
+              <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
+                <VideoCard 
+                  href=""
+                  title={video.title}
+                  instagramEmbed={video.id}
+                  views={video.views}
+                  class="!aspect-[9/16] w-full"
+                  hideHeaders={true}
+                  originalForm={['evanisboreddd', 'last-crumb', 'kazuo'].includes(Astro.params.slug)}
+                />
+              </div>
+            );
           }
 
-          if (activeVideos.length > 0) {
-            return activeVideos.map((video, index) => {
-              const stagger = index % 3;
-              const delayClass = `delay-${(stagger + 2) * 150}`;
-              
-              if (video.isInsta) {
-                return (
-                  <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
-                    <VideoCard 
-                      href=""
-                      title={video.title}
-                      instagramEmbed={video.id}
-                      views={video.views}
-                      class="!aspect-[9/16] w-full"
-                      hideHeaders={true}
-                      originalForm={['evanisboreddd', 'last-crumb', 'kazuo'].includes(Astro.params.slug)}
-                    />
-                  </div>
-                );
-              }
-
-              if (video.videoSrc) {
-                return (
-                  <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
-                    <VideoCard 
-                      href=""
-                      title={video.title}
-                      videoSrc={video.videoSrc}
-                      views={video.views}
-                      class="!aspect-[9/16] w-full"
-                      hideHeaders={true}
-                    />
-                  </div>
-                );
-              }
-
-              if (video.isTikTok) {
-                return (
-                  <div class={`scroll-reveal ${delayClass} transition-all duration-500`}>
-                    <VideoCard 
-                      href=""
-                      title={video.title}
-                      tiktokEmbed={video.id}
-                      views={video.views}
-                      class="!aspect-auto w-full !h-auto !rounded-2xl"
-                      hideHeaders={true}
-                    />
-                  </div>
-                );
-              }
-
-              const isHorizontal = video.isHorizontal;
-              const aspectClass = isHorizontal ? 'aspect-video' : 'aspect-[9/16]';
-              
-              return (
-                <div class={`flex flex-col gap-4 ${isHorizontal && Astro.params.slug !== 'nyu-journalism' ? 'col-span-1 md:col-span-2 lg:col-span-3' : ''}`}>
-                  <div class={`${aspectClass} w-full bg-black rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1&modestbranding=1&controls=1&showinfo=0`}
-                      title={video.title}
-                      width="100%"
-                      height="100%"
-                      class="absolute inset-0 w-full h-full"
-                      frameborder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                      allowfullscreen
-                    ></iframe>
-                  </div>
-                </div>
-              );
-            });
-          } else {
-            return Array(6).fill("").map((_, index) => {
-              const stagger = index % 3;
-              const delayClass = `delay-${(stagger + 2) * 150}`;
-              return (
-                <div class={`aspect-[9/16] w-full bg-[#111] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-500 hover:!opacity-100 group-hover/grid:opacity-50 hover:scale-[1.02] cursor-pointer`}>
-                  <video 
-                    autoplay 
-                    loop 
-                    muted 
-                    playsinline 
-                    class="w-full h-full object-cover opacity-90 video-element"
-                  ></video>
-                </div>
-              );
-            });
+          if (video.videoSrc) {
+            return (
+              <div class={`scroll-reveal ${delayClass} transition-all duration-500 hover:scale-[1.02]`}>
+                <VideoCard 
+                  href=""
+                  title={video.title}
+                  videoSrc={video.videoSrc}
+                  views={video.views}
+                  class="!aspect-[9/16] w-full"
+                  hideHeaders={true}
+                />
+              </div>
+            );
           }
-        })()}
-      </div>
+
+          if (video.isTikTok) {
+            return (
+              <div class={`scroll-reveal ${delayClass} transition-all duration-500`}>
+                <VideoCard 
+                  href=""
+                  title={video.title}
+                  tiktokEmbed={video.id}
+                  views={video.views}
+                  class="!aspect-auto w-full !h-auto !rounded-2xl"
+                  hideHeaders={true}
+                />
+              </div>
+            );
+          }
+
+          const isHorizontal = video.isHorizontal;
+          const aspectClass = isHorizontal ? 'aspect-video' : 'aspect-[9/16]';
+          
+          return (
+            <div class="flex flex-col gap-4">
+              <div class={`${aspectClass} w-full bg-black rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-300 relative group`}>
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.id}?rel=0&playsinline=1&modestbranding=1&controls=1&showinfo=0`}
+                  title={video.title}
+                  width="100%"
+                  height="100%"
+                  class="absolute inset-0 w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          );
+        };
+
+        const horizontalVideos = activeVideos.filter(v => v.isHorizontal);
+        const verticalVideos = activeVideos.filter(v => !v.isHorizontal);
+
+        if (horizontalVideos.length > 0 && verticalVideos.length > 0) {
+          return (
+            <div class="flex flex-col gap-12 md:gap-16 w-full">
+              <!-- Landscape Videos (2 wide on desktop/tablet, 1 on mobile) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 group/grid">
+                {horizontalVideos.map((video, index) => renderVideo(video, index))}
+              </div>
+
+              <!-- Vertical Videos / Reels (3 wide on desktop, 1 on mobile) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 group/grid">
+                {verticalVideos.map((video, index) => renderVideo(video, index + horizontalVideos.length))}
+              </div>
+            </div>
+          );
+        }
+
+        if (activeVideos.length > 0) {
+          const gridCols = slug === 'nyu-journalism'
+            ? 'grid-cols-1 md:grid-cols-2 max-w-6xl mx-auto'
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
+          return (
+            <div class={`grid gap-6 md:gap-8 group/grid ${gridCols}`}>
+              {activeVideos.map((video, index) => renderVideo(video, index))}
+            </div>
+          );
+        } else {
+          return (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 group/grid">
+              {Array(6).fill("").map((_, index) => {
+                const stagger = index % 3;
+                const delayClass = `delay-${(stagger + 2) * 150}`;
+                return (
+                  <div class={`aspect-[9/16] w-full bg-[#111] rounded-2xl md:rounded-3xl overflow-hidden border border-zinc-800 scroll-reveal ${delayClass} transition-all duration-500 hover:!opacity-100 group-hover/grid:opacity-50 hover:scale-[1.02] cursor-pointer`}>
+                    <video 
+                      autoplay 
+                      loop 
+                      muted 
+                      playsinline 
+                      class="w-full h-full object-cover opacity-90 video-element"
+                    ></video>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+      })()}
     </div>
 
     <!-- Additional Sections per project -->
@@ -286,11 +318,12 @@ type VideoEntry = {
           <h2 class="text-3xl md:text-4xl font-sans font-bold text-white mb-2 tracking-tight">AI Generated Content</h2>
           <div class="w-20 h-1 bg-white rounded-full opacity-20"></div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 group/grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 group/grid">
           {[
             { id: 'gym8uGAq3g0', title: 'AI - Valentines Launch' },
             { id: 'RoL6XMhUedY', title: 'AI - Floating Box' },
-            { id: '9IlM7qCxCAs', title: 'AI - Valentines Ad' }
+            { id: '9IlM7qCxCAs', title: 'AI - Valentines Ad' },
+            { id: 'F4ltlhp8qQY', title: 'AI - Viral Fall' }
           ].map((video, index) => {
             const stagger = index % 3;
             const delayClass = `delay-${(stagger + 2) * 150}`;
